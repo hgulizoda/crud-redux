@@ -1,58 +1,92 @@
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import React from "react";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  IconButton,
+  Stack,
+  Box,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
   setChangingProduct,
 } from "../store/slices/productSlice";
+import { useNavigate } from "react-router-dom";
 
-export default function ProductCard({ ...rest }) {
+export default function AdminProductCard(product) {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.auth);
+  const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        maxWidth: 280,
+        borderRadius: 3,
+        boxShadow: 3,
+        transition: "transform 0.2s, box-shadow 0.2s",
+        "&:hover": {
+          transform: "translateY(-5px)",
+          boxShadow: 6,
+        },
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
+    >
       <CardMedia
         component="img"
-        height="250"
-        image={rest.url}
-        alt={rest.title}
+        height="200"
+        image={product.url}
+        alt={product.name}
+        sx={{ objectFit: "cover" }}
       />
+
       <CardContent
-        sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 0.5 }}
       >
         <Typography
-          variant="h6"
-          sx={{ color: "text.secondary", fontWeight: "800" }}
+          variant="subtitle1"
+          fontWeight="bold"
+          color="text.primary"
+          noWrap
         >
-          {rest.name}
+          {product.name}
         </Typography>
-        <Typography variant="body1" sx={{ color: "text.secondary" }}>
-          {rest.description}
+
+        <Typography variant="h6" color="primary" fontWeight="bold">
+          ${product.price}
         </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {rest.count}
+
+        <Typography variant="body2" color="text.secondary">
+          Stock: {product.count || 0}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton
-          aria-label="add to favorites"
-          onClick={() => dispatch(deleteProduct(rest.id))}
-        >
-          <DeleteIcon />
-        </IconButton>
-        <IconButton
-          aria-label="share"
-          onClick={() => dispatch(setChangingProduct(rest))}
-        >
-          <EditIcon />
-        </IconButton>
+
+      <CardActions sx={{ justifyContent: "space-between", px: 2 }}>
+        <Stack direction="row" spacing={1}>
+          <IconButton
+            color="primary"
+            onClick={() =>
+              auth ? dispatch(setChangingProduct(product.id)) : navigate("/")
+            }
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
+            onClick={() =>
+              auth ? dispatch(deleteProduct(product.id)) : navigate("/")
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Stack>
       </CardActions>
     </Card>
   );

@@ -10,6 +10,7 @@ import {
   editProduct,
 } from "../store/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function BasicModal() {
   const [open, setOpen] = useState(false);
@@ -17,7 +18,8 @@ export default function BasicModal() {
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const changing = useSelector((state) => state.product.changingProduct);
-  console.log(changing);
+  const auth = useSelector((state) => state.auth.auth);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (changing) {
@@ -44,8 +46,17 @@ export default function BasicModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained">
-        {!changing ? "Add Product" : "Save"}
+      <Button
+        onClick={() => {
+          if (!auth) {
+            navigate("/");
+          } else {
+            handleOpen();
+          }
+        }}
+        variant="contained"
+      >
+        {changing ? "Save" : "Add Product"}
       </Button>
       <Modal
         open={open}

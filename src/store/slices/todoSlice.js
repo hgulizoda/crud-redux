@@ -1,13 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  todos: [],
+  todos: [
+    {
+      text: "Take out the garbage",
+      id: 1,
+    },
+    {
+      text: "Call your mom",
+      id: 2,
+    },
+    {
+      text: "Clean the room",
+      id: 3,
+    },
+  ],
   editingTodo: null,
 };
 
 const todoSlice = createSlice({
   name: "todo",
-  initialState,
+  initialState: initialState,
   reducers: {
     addTodo: (state, action) => {
       state.todos.push({

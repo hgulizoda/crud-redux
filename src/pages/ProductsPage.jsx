@@ -1,14 +1,12 @@
 import { useSelector } from "react-redux";
 import BasicModal from "../components/modalInputProduct";
 import ProductCard from "../components/productCard";
-import Header from "../components/header";
 
 const ProductsPage = () => {
   const products = useSelector((state) => state.product.products || []);
 
   return (
     <>
-      <Header />
       <div
         className="container"
         style={{

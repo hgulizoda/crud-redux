@@ -9,14 +9,15 @@ import {
   editTodo,
 } from "../store/slices/todoSlice";
 import TodoCard from "../components/todoBar";
-import Header from "../components/header";
+import { useNavigate } from "react-router-dom";
 
 export default function TodoList() {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todo.todos);
   const editingTodo = useSelector((state) => state.todo.editingTodo);
-
   const [input, setInput] = useState("");
+  const auth = useSelector((state) => state.auth.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (editingTodo) {
@@ -40,7 +41,6 @@ export default function TodoList() {
 
   return (
     <>
-      <Header />
       <Box sx={{ width: "400px", margin: "50px auto" }}>
         <form onSubmit={handleSubmit} style={{ display: "flex", gap: "10px" }}>
           <TextField
@@ -50,7 +50,11 @@ export default function TodoList() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <Button type="submit" variant="contained">
+          <Button
+            type="submit"
+            variant="contained"
+            onClick={() => (!auth ? navigate("/") : handleSubmit())}
+          >
             {editingTodo ? "Save" : "Add"}
           </Button>
         </form>
