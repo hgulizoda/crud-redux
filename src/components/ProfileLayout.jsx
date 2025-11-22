@@ -4,13 +4,12 @@ import { Outlet } from "react-router-dom";
 const ProfileLayout = () => {
   return (
     <div
-      className="container"
+      className="big-container"
       style={{
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "start",
         width: "100%",
-        backgroundColor: "red",
+        gap: "50px",
       }}
     >
       <ProfileAside />

@@ -14,6 +14,10 @@ body {
   margin: 0 auto;
 }
 
+.big-container {
+  max-width: 1700px;
+}
+
 header {
   padding-block: 20px;
   display: flex;

@@ -26,7 +26,7 @@ export default function AdminProductCard(product) {
   return (
     <Card
       sx={{
-        maxWidth: 280,
+        width: 280,
         borderRadius: 3,
         boxShadow: 3,
         transition: "transform 0.2s, box-shadow 0.2s",

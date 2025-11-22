@@ -11,8 +11,12 @@ import {
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function ProfileAside({ user, selected, onSelect }) {
+export default function ProfileAside() {
+  const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -48,32 +52,22 @@ export default function ProfileAside({ user, selected, onSelect }) {
 
       <Divider />
 
-      {/* Navigation */}
       <List component="nav" sx={{ mt: 2 }}>
-        <ListItemButton
-          selected={selected === "todos"}
-          onClick={() => onSelect("todos")}
-        >
+        <ListItemButton onClick={() => navigate("/todos")}>
           <ListItemIcon>
             <AssignmentIcon />
           </ListItemIcon>
           <ListItemText primary="Todos" />
         </ListItemButton>
 
-        <ListItemButton
-          selected={selected === "products"}
-          onClick={() => onSelect("products")}
-        >
+        <ListItemButton onClick={() => navigate("/products")}>
           <ListItemIcon>
             <StorefrontIcon />
           </ListItemIcon>
           <ListItemText primary="Products" />
         </ListItemButton>
 
-        <ListItemButton
-          selected={selected === "settings"}
-          onClick={() => onSelect("settings")}
-        >
+        <ListItemButton onClick={() => navigate("/profile")}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>

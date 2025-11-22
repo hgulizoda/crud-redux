@@ -6,13 +6,16 @@ const ProductsPage = () => {
   const products = useSelector((state) => state.product.products || []);
 
   return (
-    <>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "start" }}
+    >
       <div
         className="container"
         style={{
           display: "flex",
           justifyContent: "space-between",
           marginTop: "50px",
+          width: "100%",
         }}
       >
         <h1>Products List</h1>
@@ -32,7 +35,7 @@ const ProductsPage = () => {
           <ProductCard key={product.id} {...product} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
